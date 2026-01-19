@@ -64,13 +64,12 @@ function animateGame(){
 
 function drawGame(){
   background.drawBackground();
-  hero.draw();
-  
   for (let i = 0; i < obstacles.length; i++){
     const obstacle = obstacles[i];
     obstacle.draw();
   }
   background.drawGround();
+  hero.draw();
 }
 
 function loadGame() {
