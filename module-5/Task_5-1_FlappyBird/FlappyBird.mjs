@@ -5,6 +5,7 @@ import { TBackground } from "./background.js";
 import { THero } from "./hero.js";
 import { TObstacle } from "./obstacle.js";
 import { TBait } from "./bait.js";
+import { TMenu } from "./menu.js";
 
 //--------------- Objects and Variables ----------------------------------//
 const chkMuteSound = document.getElementById("chkMuteSound");
@@ -30,109 +31,129 @@ const SpriteInfoList = {
   medal:        { x: 985 , y: 635 , width: 44   , height: 44  , count: 4  },
 };
 
- export const EGameStatus = { idle: 0, gaming: 1, heroIsDead: 2, gameOver: 3, 
-  state:1 
-};
+export const EGameStatus = { idle: 0, countDown: 1, gaming: 2, heroIsDead: 3, gameOver: 4, state: 0 };
 const background = new TBackground(spcvs, SpriteInfoList);
-export const hero = new THero(spcvs, SpriteInfoList.hero2);
-const obstacles =[];
-const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle);
+export const hero = new THero(spcvs, SpriteInfoList.hero1);
+const obstacles = [];
 const baits = [];
+export const menu = new TMenu(spcvs, SpriteInfoList);
+let obstaclePassed = false;
 
 //--------------- Functions ----------------------------------------------//
+export function startGame() {
+  EGameStatus.state = EGameStatus.gaming;
+  setTimeout(spawnObstacle, 1000);
+  setTimeout(spawnBait, 1000);
+}
+
 function spawnBait() {
-  const bait = new TBait(spcvs, SpriteInfoList.food);
-  baits.push(bait);
-  setTimeout(spawnBait, 500);
+  if (EGameStatus.state === EGameStatus.gaming) {
+    const bait = new TBait(spcvs, SpriteInfoList.food);
+    baits.push(bait);
+    const nextTime = Math.ceil(Math.random() * 3) + 1;
+    setTimeout(spawnBait, nextTime * 1000);
+  }
 }
 
-
-function spawnObstacle(){
-  const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle);
-  obstacles.push(obstacle);
-  const nextTime = Math.ceil(Math.random() * 3) + 1;
-  setTimeout(spawnObstacle, nextTime *1000);
+function spawnObstacle() {
+  if (EGameStatus.state === EGameStatus.gaming) {
+    const obstacle = new TObstacle(spcvs, SpriteInfoList.obstacle);
+    obstacles.push(obstacle);
+    const nextTime = Math.ceil(Math.random() * 3) + 1;
+    setTimeout(spawnObstacle, nextTime * 1000);
+  }
 }
 
-
-function animateGame(){
+function animateGame() {
+  //console.log(EGameStatus.state);
   hero.animate();
-  for(let i = 0; i < baits.length; i++){
+  let eaten = -1;
+  for (let i = 0; i < baits.length; i++) {
     const bait = baits[i];
     bait.animate();
-}
-  if(EGameStatus.state!=EGameStatus.gaming){
-    return
-  }
-  background.animate();
-  let deleteObstacle = false;
-  for (let i = 0; i < obstacles.length; i++){
-    const obstacle = obstacles[i];
-    obstacle.animate();
-    if (obstacle.x < -50 ){
-      deleteObstacle = true;
+    if (bait.distanceTo(hero.center) < 20) {
+      eaten = i;
     }
   }
-  if (deleteObstacle){
-    obstacles.splice( 0, 1 );
+  if (eaten >= 0) {
+    console.log("Eaten!");
+    baits.splice(eaten, 1);
+    hero.eat();
+  }
+
+  if (EGameStatus.state === EGameStatus.gaming) {
+    background.animate();
+    let deleteObstacle = false;
+    for (let i = 0; i < obstacles.length; i++) {
+      const obstacle = obstacles[i];
+      obstacle.animate();
+      if (obstacle.x < -50) {
+        deleteObstacle = true;
+        obstaclePassed = false;
+      }else if((obstacle.x + obstacle.width) < hero.x){
+        if(!obstaclePassed){
+          menu.incGameScore(1);
+          obstaclePassed =true;
+          console.log("test");
+        }
+      }
+    }
+    if (deleteObstacle) {
+      obstacles.splice(0, 1);
+      }
   }
 }
 
-function drawGame(){
+
+function drawGame() {
   background.drawBackground();
-    baits.forEach(element => {
-    element.draw() 
-    });
-  
-  for (let i = 0; i < obstacles.length; i++){
+  for (let i = 0; i < baits.length; i++) {
+    const bait = baits[i];
+    bait.draw();
+  }
+
+  for (let i = 0; i < obstacles.length; i++) {
     const obstacle = obstacles[i];
     obstacle.draw();
   }
-  background.drawGround();
   hero.draw();
+  background.drawGround();
+  menu.draw();
 }
 
 function loadGame() {
   console.log("Game Loaded");
   // Set canvas size to background size
   cvs.width = SpriteInfoList.background.width;
-  cvs.height = SpriteInfoList.background.height; 
+  cvs.height = SpriteInfoList.background.height;
 
   // Overload the spcvs draw function here!
   spcvs.onDraw = drawGame;
 
-  // Start animate engine
+  //Start animate engine
   setInterval(animateGame, 10);
-  setTimeout(spawnObstacle, 1000);
-  setTimeout(spawnBait, 1000) 
-  //spawnObstacle();
-
 } // end of loadGame
 
-
 function onKeyDown(aEvent) {
-  if(EGameStatus.state==EGameStatus.heroIsDead){
-    return
-  } 
   switch (aEvent.code) {
     case "Space":
       console.log("Space key pressed, flap the hero!");
-      hero.flap();
+      if (EGameStatus.state !== EGameStatus.heroIsDead) {
+        hero.flap();
+      }
       break;
   }
 } // end of onKeyDown
 
-function setSoundOnOff(){
+function setSoundOnOff() {
   // Mute or unmute the game sound based on checkbox
-
 } // end of setSoundOnOff
 
-function setDayNight(aEvent){ 
+function setDayNight(aEvent) {
   // Set day or night mode based on radio buttons
   // Day mode is when value is 1, night mode is 0, you can use this as a boolean, 1=true, 0=false
   // e.g., isDayMode = (aEvent.target.value == 1);
   console.log(`Day/Night mode changed: ${aEvent.target.value}`);
-
 } // end of setDayNight
 
 //--------------- Main Code ----------------------------------------------//
