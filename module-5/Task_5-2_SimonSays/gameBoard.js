@@ -1,8 +1,9 @@
 "use strict";
-import { TPoint } from "lib2d";
+import { TPoint, TCircle } from "lib2d";
 import { TSprite, TSpriteButton } from "libSprite";
 import { TColorButton } from "./colorButton.js";
 import { activateAudioContext } from "libSound";
+import { spawnColorButton } from "./SimonSays.mjs";
 
 export class TGameBoard extends TSprite{
   #colorButtons;
@@ -24,11 +25,21 @@ export class TGameBoard extends TSprite{
     let posX = center.x - aSPI.ButtonStartEnd.width / 2;
     let posY = center.y - aSPI.ButtonStartEnd.height / 2;
 
-    this.#gameInfo = new TSpriteButton(aSpcvs, aSPI.ButtonStartEnd, posX, posY);
+    this.#gameInfo = new TSpriteButton(aSpcvs, aSPI.ButtonStartEnd, posX, posY, TCircle);
     this.#gameInfo.debug = true;
     this.#gameInfo.onClick = this.#gameInfoClick.bind(this);
     this.#disableColorButtons(true);
     this.#isSoundEnabled = false;
+  }
+
+  get colorButtons(){
+    return this.#colorButtons;
+  }
+
+  gameOver(){
+    this.#disableColorButtons(true);
+    this.#gameInfo.index = 1;
+    this.#gameInfo.hidden = false;
   }
 
   draw(){
@@ -59,6 +70,7 @@ export class TGameBoard extends TSprite{
         colorButton.createSound(i);
       }
     }
+    spawnColorButton(); //this activates the sequence when the game starts.
   }
 }
 //Test
