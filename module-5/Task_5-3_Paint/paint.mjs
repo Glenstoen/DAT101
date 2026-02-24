@@ -1,7 +1,8 @@
 "use strict";
 
 import { TMenu, EActionType, EColorType, EShapeType, EStrokeSizeType } from "./menu.js";
-import { } from "./shape.js"
+import { } from "./shape.js";
+
 /*
 📝 TODO: Create a Shape System
 ═══════════════════════════════════════════════════════════════════
@@ -86,7 +87,7 @@ You need to build this file with the following features:
  *    When user clicks a menu button (e.g., "Circle"), this object gets updated
  *    So when drawing a new shape, the app knows which settings to use
  */
-const newShapeType = { ShapeType: EShapeType.Line, FillColor: EColorType.Black, StrokeColor: EColorType.Black, StrokeSize: EStrokeSizeType.Thin };
+export const newShapeType = { ShapeType: EShapeType.Line, FillColor: EColorType.Black, StrokeColor: EColorType.Black, StrokeSize: EStrokeSizeType.Thin };
 
 /**
  * 🎮 CREATE THE MENU TOOLBAR
@@ -97,6 +98,8 @@ const newShapeType = { ShapeType: EShapeType.Line, FillColor: EColorType.Black, 
  * E.g. index {0, 1, 2, 3} for normal, hover, mouse down, disabled states.
  */
 const menu = new TMenu(newShapeType);
+
+
 
 /**
  * 📢 MENU BUTTON HANDLER
