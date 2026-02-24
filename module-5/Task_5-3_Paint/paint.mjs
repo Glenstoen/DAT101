@@ -1,8 +1,7 @@
 "use strict";
 
 import { TMenu, EActionType, EColorType, EShapeType, EStrokeSizeType } from "./menu.js";
-import { } from "./shape.js";
-
+import { } from "./shape.js"
 /*
 📝 TODO: Create a Shape System
 ═══════════════════════════════════════════════════════════════════
@@ -98,8 +97,6 @@ export const newShapeType = { ShapeType: EShapeType.Line, FillColor: EColorType.
  * E.g. index {0, 1, 2, 3} for normal, hover, mouse down, disabled states.
  */
 const menu = new TMenu(newShapeType);
-
-
 
 /**
  * 📢 MENU BUTTON HANDLER
