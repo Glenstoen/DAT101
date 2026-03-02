@@ -40,8 +40,8 @@ export class TObstacle{
     return this.#spDown.x;
   }
 
-  get with(){
-    return this.#spDown.x;
+  get width(){
+    return this.#spDown.width;
   }
 
   draw(){

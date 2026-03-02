@@ -13,34 +13,31 @@ export class THero extends TSprite {
   #speed;
   #wave;
   #sfFood;
-  #sfHeroisDead;
+  #sfHeroIsDead;
   #sfGameOver;
   constructor(aSpcvs, aSPI) {
     super(aSpcvs, aSPI, 100, 20);
     this.animationSpeed = 20;
     this.#gravity = 9.81 / 100;
     this.#speed = 0;
-    this.debug = false;
     this.#wave = new TSineWave(1, 1);
     this.y += this.#wave.value;
     this.#sfFood = null;
-    this.#sfHeroisDead = null;
+    this.#sfHeroIsDead = null;
     this.#sfGameOver = null;
   }
 
   eat() {
-    if(this.#sfFood === null){
-        this.#sfFood = new TSoundFile(fnFood);
-    }else{
-        this.#sfFood.stop();
+    if (this.#sfFood === null) {
+      this.#sfFood = new TSoundFile(fnFood);
+    } else {
+      this.#sfFood.stop();
     }
     this.#sfFood.play();
-
   }
+
   animate() {
-    const hasGravity = 
-       EGameStatus.state === EGameStatus.gaming || 
-       EGameStatus.state === EGameStatus.heroIsDead
+    const hasGravity = EGameStatus.state === EGameStatus.gaming || EGameStatus.state === EGameStatus.heroIsDead;
 
     if (hasGravity) {
       if (this.y < 400 - this.height) {
@@ -57,19 +54,18 @@ export class THero extends TSprite {
         this.#sfGameOver = new TSoundFile(fnGameOver);
         this.#sfGameOver.play();
       }
-    }else if(EGameStatus.state === EGameStatus.idle){
+    } else if (EGameStatus.state === EGameStatus.idle) {
       this.y += this.#wave.value;
     }
   } // End of animate
-  
-  dead() {
-    this.#sfHeroisDead = new TSoundFile(fnHeroIsDead);
-    this.#sfHeroisDead.play();
+
+  dead(){
+    this.#sfHeroIsDead = new TSoundFile(fnHeroIsDead);
+    this.#sfHeroIsDead.play();
   }
 
-
   flap() {
-    this.#speed = -3.5;
+    this.#speed = -2.5;
     this.rotation = 0;
   }
 }

@@ -21,14 +21,13 @@ export class TMenu{
     this.#spCountDown.visible = false;
     this.#sfCountDown = null;
     this.#sfRunning = null;
-    this.#spGameScore = new TSpriteNumber(aSpcvs, aSPI.numberSmall, 10, 10)
+    this.#spGameScore = new TSpriteNumber(aSpcvs, aSPI.numberSmall, 10, 10);
     this.#spGameScore.alpha = 0.5;
   }
 
   incGameScore(aScore){
     this.#spGameScore.value += aScore;
   }
-
 
   stopSound(){
     this.#sfRunning.stop();
@@ -44,14 +43,15 @@ export class TMenu{
   countDown(){
     this.#spCountDown.value--;
     if(this.#spCountDown.value > 0){
-        setTimeout(this.countDown.bind(this), 1000);
+      setTimeout(this.countDown.bind(this), 1000);  
     }else{
-        this.#sfRunning = new TSoundFile(fnRunning);
-        this.#sfRunning.play();
-        this.#spCountDown.visible = false;
-        this.#spTitle.hidden = true;
-        startGame();
+      this.#spCountDown.visible = false;
+      this.#spTitle.hidden = true;
+      this.#sfRunning = new TSoundFile(fnRunning);
+      this.#sfRunning.play();
+      startGame();
     }
+    
   }
 
   spPlayBtnClick(){

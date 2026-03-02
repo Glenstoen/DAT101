@@ -1,26 +1,3 @@
-/*"use strict";
-import { TSprite } from "libSprite";
-import { EGameStatus } from "./FlappyBird.mjs";
-
-
-export class TBait extends TSprite {
-    #speed
-    constructor(aSpcvs, aSPI) {
-        super(aSpcvs, aSPI, 200, 100);
-        this.animationSpeed = 20;
-        this.#speed = 0.3;
-    }
-
-    animate(){
-        if(EGameStatus.state === EGameStatus.gaming){
-            this.x -= this.#speed;
-        }else{
-            this.x += this.#speed;
-        }
-    }
-}
-*/
-
 "use strict";
 import { TSprite } from "libSprite";
 import { EGameStatus } from "./FlappyBird.mjs";
@@ -36,7 +13,6 @@ export class TBait extends TSprite {
     this.#speed = Math.ceil(Math.random() * 10) / 10;
     this.y += this.#wave.value;
     this.animationSpeed = this.#speed * 50;
-    this.debug = true;
   }
 
   animate() {

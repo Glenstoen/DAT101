@@ -65,7 +65,6 @@ function spawnObstacle() {
 }
 
 function animateGame() {
-  //console.log(EGameStatus.state);
   hero.animate();
   let eaten = -1;
   for (let i = 0; i < baits.length; i++) {
@@ -93,17 +92,15 @@ function animateGame() {
       }else if((obstacle.x + obstacle.width) < hero.x){
         if(!obstaclePassed){
           menu.incGameScore(1);
-          obstaclePassed =true;
-          console.log("test");
+          obstaclePassed = true;
         }
       }
     }
     if (deleteObstacle) {
       obstacles.splice(0, 1);
-      }
+    }
   }
 }
-
 
 function drawGame() {
   background.drawBackground();

@@ -103,43 +103,6 @@ function convertTemperature(aTemp, aTempTypes){
 
 convertTemperature(47, kelvin);
 
-/*const tempTypes = {
-    kelvin: 1,
-    celsius: 2,
-    fahrenheit: 3
-}
-
-function convertTemperature(aTemp, aTempTypes){
-    let kelvin=0;
-    let celsius=0; 
-    let fahrenheit=0;
-
-    switch (aTempTypes){
-        case tempTypes.kelvin:
-            kelvin= aTemp;
-            celsius= kelvin - 273.15;
-            fahrenheit= (celsius * 9/5) + 32;
-            printOut(`Temperature in Kelvin: ${kelvin}`);
-            break;
-        case tempTypes.celsius:
-            celsius= aTemp;
-            kelvin= celsius + 273.15;
-            fahrenheit= (celsius * 9/5) + 32;
-            printOut(`Temperature in Celsius: ${celsius}`);
-            break;
-        case tempTypes.fahrenheit:
-            fahrenheit= aTemp;
-            celsius= (fahrenheit - 32) * 5/9;
-            kelvin= celsius + 273.15;
-            printOut(`Temperature in Fahrenheit: ${fahrenheit}`);
-            break;
-        }   
-    }
-
-    convertTemperature(300, tempTypes.kelvin);
-    convertTemperature(27, tempTypes.celsius);
-    convertTemperature(80, tempTypes.fahrenheit);
-*/
 printOut(newLine);
 
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");

@@ -232,35 +232,7 @@ else if (grade5>=41){
 else{
     txtPrintValue11+= "Student 5: "+grade5+ "% - F"+ "<br>";
 }
-/*
-for(let i=0; i<student; i++){
-    let grade=0;
-    switch(i){
-        case 1:
-            grade = grade1;
-            break;
-        case 2:
-            grade = grade2;
-            break;
-        case 3:
-            grade = grade3;
-            break;
-        case 4:
-            grade = grade4;
-            break;
-        case 5:
-            grade = grade5;
-            break;   
-    }
-    let j=i-1;
 
-    do{
-        let gradeCompare= 0;
-
-        j--
-    }while(j>0);
-}
-*/
 printOut(txtPrintValue8);
 printOut(newLine);
 printOut(txtPrintValue11);
