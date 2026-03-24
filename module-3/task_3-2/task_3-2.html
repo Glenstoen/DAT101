@@ -10,8 +10,23 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>In part 1, is it possible to solve the problem using a single "for" loop?</li>
+      <p>yes by using 2 different variables that both checks if the are lower/equal or higher/equal, where one counts up and one counts down.</p>
+
+      <li>In part 2, can we create what is known as an "infinite" loop within the condition of the "while" loop?
+     Describe what would or would not be necessary to achieve this. Provide a thorough explanation of
+      your answer.</li>
+      <p>to create an "infinite" loop in part 2, we could set the number to be guessed at 61, which is outside the scope of our guessing loop. this will result in the conditions of the program never beeing met, so it will run until it crashes/infinite</p>
+      
+      <li>Discuss briefly how quickly or slowly a computer might be able to compute this, considering the
+    number of guesses and the time it takes. How does the program behave while it is guessing? Can
+    the program perform other tasks concurrently?</li>
+      <p>This will be computed insanly fast, so the memory will be flooded and will eventually cause a crash. the program will be stuck in a loop since JS runs on a single thread, so the program will not be able to perform other tasks while in this loop.</p>
+
+      <li>Explain the relationship between rows and columns in nested "for" loops. Can we, for instance,
+    change the order, considering rows to be innermost or columns to be innermost, or does this not
+    matter?</li>
+    <p>in a nested "for" loop, the inner loop iterates through the coloumns of each row, changing this order will change the output pattern, and the order in which tho loop follows. but will not change the overall function of the loop.</p>
     </ol>
     <script type="module" src="./task_3-2.mjs" defer></script>
   </body>
