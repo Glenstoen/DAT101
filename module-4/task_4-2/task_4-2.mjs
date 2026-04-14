@@ -146,7 +146,47 @@ printOut(newLine);
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 
+let freq = {};
+
+for (let i = 0; i < randomNumbers.length; i++) {
+  let num = randomNumbers[i];
+  if (freq[num] === undefined) {
+    freq[num] = 0;
+  }
+  freq[num]++;
+}
+
+printOut("Numbers and their frequency:");
+for (let key in freq) {
+  printOut("Number " + key + ": occurs " + freq[key] + " times");
+}
+
+// Convert to array for sorting
+let freqArray = Object.keys(freq).map(function (n) {
+  return {
+    number: Number(n),
+    count: freq[n],
+  };
+});
+
+// Sort by frequency desc, then number asc
+freqArray.sort(function (a, b) {
+  if (a.count === b.count) {
+    return a.number - b.number;
+  }
+  return b.count - a.count;
+});
+
 printOut(newLine);
+printOut("Sorted by frequency (most frequent first):");
+
+for (let j = 0; j < freqArray.length; j++) {
+  let entry = freqArray[j];
+  printOut("Number " + entry.number + ": " + entry.count + " times");
+}
+
+printOut(newLine);
+
 
 /* Task 10*/
 printOut("--- Part 10 ---------------------------------------------------------------------------------------------");

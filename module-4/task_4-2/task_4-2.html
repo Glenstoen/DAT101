@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" style="display: table; margin: auto; zoom: 1">
   <head>
     <meta charset="UTF-8" />
@@ -6,12 +6,33 @@
   </head>
   <body style="display: table-cell; vertical-align: middle">
     <h2><label for="txtOut">Output from Task 4.2:</label></h2>
-    <div style="padding: 10px; min-width: 512px; border: darkblue thin solid; background-color: antiquewhite; font-family: 'Courier New', serif">
+    <div style="padding: 10px; min-width: 512px; border: darkblue thin solid; background-color: antiquewhite; font-family: &quot;Courier New&quot;, serif">
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>What is an array? A short and concise answer is expected here!</li>
+      <p>An array is a list that stores multiple values in one variable, accessed by index.</p>
+      <li>What does it mean to "hardcode" when we talk about programming? (In English, it's called "hard coding", "hard-coding", or "hardcoding").</li>
+      <p>Hardcoding means writing fixed values directly into the code instead of generating or loading them dynamically.</p>
+      <li>Explain in plain text what happens in task 3, and how we can traverse (iterate) the array when we (humans) don't "know" how long the array is.
+      <p>Task 3 splits a sentence into array of words, then loops through the array. We traverse it using array.length, so the loop automatically adjusts to size.</p>
+      <li>Why is it beneficial to store instances of a class in arrays, as in task 4?</li>
+      <p>Because arrays let us organize, loop through, and manage many objects efficiently in one place.</p>
+      <li>
+        Try your best to explain the EWeekDays object from task 7. How do we use the "value" attribute, for example? In what way do "WeekDay", "Workdays", and "Weekends" differ from each other? If we wanted to create a new element "WorkoutDays",
+        which would contain "Monday", "Wednesday", and "Thursday", how would it ideally look? (I will choose the best answer to this task and reward it with pizza in the cafeteria right after New Year. Remember to mark in your submission if you want
+        to participate in the competition!)
+      </li>
+      <p>EWeekDay is a static object where each key represents a day or group of days. The value attribute holds a numeric ID used for comparison or sorting</p>
+      <li>In task 8, we will use a "callback" routine when sorting. Explain how such a "callback" routine works.</li>
+      <p>A "callback" tells the .sort() method how to compare two values. It receives two elements and returns a number to decide their order.</p>
+      <li>
+        What happens in the sorting routines you have created? Try to explain how the array can figure out if an element should come before or after another. The best way to answer this is to actually print both parameters each time the sorting
+        routine runs.
+      </li>
+      <p>The array repeatedly compares two elements using the callback. If the callback return: Negative, first comes before second. Positive, first comes after second. Zero, they are equal. This is how sorting decides the order.</p>
+      <li>In task 10, we will create an array with rows and columns. Explain what the first element of the array contains.</li>
+      <p>It contains the first "row", which is itself an array representing all columns in row 0.</p>
     </ol>
     <script type="module" src="./task_4-2.mjs" defer></script>
   </body>
