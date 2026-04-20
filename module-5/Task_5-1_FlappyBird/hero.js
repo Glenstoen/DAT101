@@ -1,6 +1,6 @@
 "use strict";
 import { TSprite } from "libSprite";
-import { EGameStatus, menu } from "./FlappyBird.mjs";
+import { EGameStatus, menu, soundMuted } from "./FlappyBird.mjs";
 import { TSineWave } from "lib2d";
 import { TSoundFile } from "libSound";
 
@@ -15,17 +15,47 @@ export class THero extends TSprite {
   #sfFood;
   #sfHeroIsDead;
   #sfGameOver;
-  constructor(aSpcvs, aSPI) {
-    super(aSpcvs, aSPI, 100, 20);
+
+  constructor(aSpvcs, aSPI) {
+    //const xPos = this.spriteBackground.height/this.spriteBackground.width;
+
+    super(aSpvcs, aSPI, 100, 150);
     this.animationSpeed = 20;
     this.#gravity = 9.81 / 100;
     this.#speed = 0;
+    this.debug = false;
     this.#wave = new TSineWave(1, 1);
-    this.y += this.#wave.value;
     this.#sfFood = null;
     this.#sfHeroIsDead = null;
     this.#sfGameOver = null;
   }
+
+  animate() {
+  const hasGravity = EGameStatus.state === EGameStatus.gaming || EGameStatus.state === EGameStatus.heroIsDead;
+
+  if (hasGravity) {
+    if (this.y < 400 - this.height) {
+      this.#speed += this.#gravity;
+      this.y += this.#speed;
+      if (this.rotation < 90) {
+        this.rotation = this.#speed * 25;
+      }
+    } else {
+      EGameStatus.state = EGameStatus.gameOver;
+      this.animationSpeed = 0;
+      if (this.#sfGameOver === null) {
+        this.#sfGameOver = new TSoundFile(fnGameOver);
+      }
+      if (!soundMuted) {
+        this.#sfGameOver.play();
+      }
+      menu.stopSound();
+      this.dead();
+    }
+  } else if (EGameStatus.state === EGameStatus.idle) {
+    this.y += this.#wave.value;
+  }
+}
 
   eat() {
     if (this.#sfFood === null) {
@@ -33,39 +63,31 @@ export class THero extends TSprite {
     } else {
       this.#sfFood.stop();
     }
-    this.#sfFood.play();
+    if (!soundMuted){
+      this.#sfFood.play();
+    }
   }
 
-  animate() {
-    const hasGravity = EGameStatus.state === EGameStatus.gaming || EGameStatus.state === EGameStatus.heroIsDead;
-
-    if (hasGravity) {
-      if (this.y < 400 - this.height) {
-        this.#speed += this.#gravity; // increase speed due to gravity
-        this.y += this.#speed; // update position based on speed
-        if (this.rotation < 90) {
-          // limit max rotation
-          this.rotation = this.#speed * 25; // tilt down based on speed
-        }
-      } else {
-        EGameStatus.state = EGameStatus.gameOver;
-        menu.stopSound();
-        this.animationSpeed = 0;
-        this.#sfGameOver = new TSoundFile(fnGameOver);
-        this.#sfGameOver.play();
-      }
-    } else if (EGameStatus.state === EGameStatus.idle) {
-      this.y += this.#wave.value;
+  dead() {
+    if (this.#sfHeroIsDead === null) {
+      this.#sfHeroIsDead = new TSoundFile(fnHeroIsDead);
     }
-  } // End of animate
-
-  dead(){
-    this.#sfHeroIsDead = new TSoundFile(fnHeroIsDead);
-    this.#sfHeroIsDead.play();
+    if (!soundMuted) {
+      this.#sfHeroIsDead.play();
+    }
+    menu.gameOverMenu();
+    menu.highScore();
   }
 
   flap() {
-    this.#speed = -2.5;
+    this.#speed = -3;
     this.rotation = 0;
+  }
+  resetHero() {
+    this.#speed = 0;
+    this.y = 150;
+    this.rotation = 0;
+    this.#sfHeroIsDead = null;
+    this.#sfGameOver = null;
   }
 }
